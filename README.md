@@ -6,6 +6,24 @@ a FastAPI service, and a Streamlit app for interactive scoring.
 
 Built as portfolio project #1 for a UK data science job search.
 
+**🔗 Live demo:** [churn-prediction-megh.streamlit.app](https://churn-prediction-megh.streamlit.app)
+
+## How to use the live app
+
+1. Open [churn-prediction-megh.streamlit.app](https://churn-prediction-megh.streamlit.app).
+2. **Single Customer** tab — fill in the form (contract type, tenure, monthly
+   charges, services, etc.) and submit. You'll get a churn probability gauge
+   plus a SHAP bar chart showing which fields pushed the prediction up or down.
+3. **Batch** tab — upload a CSV/Excel file of customers and get a churn score
+   for every row, downloadable as a results file. Column names don't need to
+   match exactly (`monthly_charges`, `Monthly Charges`, etc. all work) — see
+   [Batch upload — accepted formats](#batch-upload--accepted-formats) below
+   for what's auto-detected vs. what you'll be asked to map by hand.
+
+The app calls a FastAPI backend on Render; if that backend is asleep (free
+tier spins down after 15 min idle) the first request may take 30-60s to wake
+it, or the app falls back to scoring locally.
+
 ## Why this project
 
 Telecom churn is a classic but well-scoped business problem: predict which
