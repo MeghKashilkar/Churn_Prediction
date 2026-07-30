@@ -1,0 +1,26 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+
+# data
+data/raw/*.csv
+!data/raw/Telco-Customer-Churn-sample.csv
+data/processed/*
+
+# models & artifacts (regenerate via training, don't bloat git history)
+models/*.pkl
+models/*.json
+
+# reports
+reports/figures/*.png
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# streamlit
+.streamlit/secrets.toml
