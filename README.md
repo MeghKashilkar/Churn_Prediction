@@ -119,24 +119,11 @@ churn-prediction/
 
 ## Get the data
 
-This repo ships with `data/raw/Telco-Customer-Churn-sample.csv` - **487 rows**
-sampled from the classic IBM/Kaggle "Telco Customer Churn" dataset, included
-purely so the pipeline runs out of the box for a smoke test. It's not enough
-data for a credible portfolio result.
+This repo ships with `data/raw/Telco-Customer-Churn.csv` - **7,043-row**
+ from the classic IBM/Kaggle "Telco Customer Churn" dataset, included
+purely so the pipeline runs out of the box.
 
-Before training for real, download the full 7,043-row dataset (one command,
-takes a few seconds):
 
-```bash
-curl -o data/raw/Telco-Customer-Churn.csv \
-  https://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv
-```
-
-or grab it from [Kaggle](https://www.kaggle.com/datasets/blastchar/telco-customer-churn)
-(same schema, needs a Kaggle account). Either way it lands at
-`data/raw/Telco-Customer-Churn.csv`, which is the default path every script
-below expects - pass `--data data/raw/Telco-Customer-Churn-sample.csv`
-instead if you just want to smoke-test the code first.
 
 ## Setup
 
