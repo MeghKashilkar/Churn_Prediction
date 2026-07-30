@@ -93,7 +93,7 @@ prediction + explanation logic can't drift between the two surfaces.
 
 ```
 churn-prediction/
-├── data/raw/                  # raw CSV goes here (see "Get the data" below)
+├── data/raw/                  # raw CSV goes here (see "Data Used" below)
 ├── data/processed/            # (optional) cached cleaned data
 ├── src/
 │   ├── data_processing.py     # cleaning, feature engineering, preprocessing pipeline
