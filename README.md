@@ -11,13 +11,13 @@ Built as portfolio project #1 for a UK data science job search.
 ## How to use the live app
 
 1. Open [churn-prediction-megh.streamlit.app](https://churn-prediction-megh.streamlit.app).
-2. **Single Customer** tab — fill in the form (contract type, tenure, monthly
+2. **Single Customer** tab - fill in the form (contract type, tenure, monthly
    charges, services, etc.) and submit. You'll get a churn probability gauge
    plus a SHAP bar chart showing which fields pushed the prediction up or down.
-3. **Batch** tab — upload a CSV/Excel file of customers and get a churn score
+3. **Batch** tab - upload a CSV/Excel file of customers and get a churn score
    for every row, downloadable as a results file. Column names don't need to
-   match exactly (`monthly_charges`, `Monthly Charges`, etc. all work) — see
-   [Batch upload — accepted formats](#batch-upload--accepted-formats) below
+   match exactly (`monthly_charges`, `Monthly Charges`, etc. all work) - see
+   [Batch upload - accepted formats](#batch-upload--accepted-formats) below
    for what's auto-detected vs. what you'll be asked to map by hand.
 
 The app calls a FastAPI backend on Render; if that backend is asleep (free
@@ -84,7 +84,7 @@ churn-prediction/
 
 ## Get the data
 
-This repo ships with `data/raw/Telco-Customer-Churn-sample.csv` — **487 rows**
+This repo ships with `data/raw/Telco-Customer-Churn-sample.csv` - **487 rows**
 sampled from the classic IBM/Kaggle "Telco Customer Churn" dataset, included
 purely so the pipeline runs out of the box for a smoke test. It's not enough
 data for a credible portfolio result.
@@ -100,7 +100,7 @@ curl -o data/raw/Telco-Customer-Churn.csv \
 or grab it from [Kaggle](https://www.kaggle.com/datasets/blastchar/telco-customer-churn)
 (same schema, needs a Kaggle account). Either way it lands at
 `data/raw/Telco-Customer-Churn.csv`, which is the default path every script
-below expects — pass `--data data/raw/Telco-Customer-Churn-sample.csv`
+below expects - pass `--data data/raw/Telco-Customer-Churn-sample.csv`
 instead if you just want to smoke-test the code first.
 
 ## Setup
@@ -114,7 +114,7 @@ pip install -r requirements.txt
 > **Note on how this repo was built:** the code in this project was written
 > and reviewed but not executed in the environment it was generated in
 > (no outbound package installs were possible there). Run the smoke test
-> below first — if anything errors, paste the traceback back and it'll get
+> below first - if anything errors, paste the traceback back and it'll get
 > fixed fast.
 
 ### Smoke test
@@ -134,8 +134,8 @@ This compares **logistic regression, random forest, gradient boosting, and
 XGBoost** with 5-fold stratified cross-validation, evaluates all four on a
 held-out 20% test set (accuracy, precision, recall, F1, ROC-AUC), and saves:
 
-- `models/best_model.pkl`, `models/preprocessor.pkl` — the winning pipeline
-- `reports/model_comparison.csv` — every model's metrics side by side
+- `models/best_model.pkl`, `models/preprocessor.pkl` - the winning pipeline
+- `reports/model_comparison.csv` - every model's metrics side by side
 - `reports/figures/roc_curves.png`, `reports/figures/confusion_matrix.png`
 
 **Fill in your real numbers here after running it** (this is exactly the kind
@@ -151,8 +151,8 @@ of quantified bullet your CV needs):
 python -m src.explain --data data/raw/Telco-Customer-Churn.csv
 ```
 
-Produces `reports/figures/shap_summary_bar.png` and `shap_summary_beeswarm.png`
-— global feature importance for the winning model — plus
+Produces `reports/figures/shap_summary_bar.png` and `shap_summary_beeswarm.png`,
+global feature importance for the winning model, plus
 `reports/shap_top_features.json`. Contract type, tenure, and internet service
 are the usual top drivers on this dataset; your actual ranking will be in the
 JSON.
@@ -181,7 +181,7 @@ curl -X POST http://localhost:8000/predict \
 ## Run the Streamlit app
 
 ```bash
-export API_URL=http://localhost:8000   # optional — defaults to this anyway
+export API_URL=http://localhost:8000   # optional - defaults to this anyway
 streamlit run streamlit_app/app.py
 ```
 
@@ -189,7 +189,7 @@ Two tabs: score one customer via a form (gauge chart + SHAP bar chart of what
 drove the prediction), or upload a file and score a batch with a downloadable
 results file.
 
-### Batch upload — accepted formats
+### Batch upload - accepted formats
 
 The batch tab doesn't require your file to match the Telco dataset's exact
 column names or value spellings. `src/schema_mapping.py` normalizes:
@@ -202,12 +202,12 @@ column names or value spellings. `src/schema_mapping.py` normalizes:
 | Category synonyms | `M2M`/`monthly` → `Month-to-month`; `Fibre`/`fiber` → `Fiber optic`; `direct debit` → `Bank transfer (automatic)`; `echeck` → `Electronic check` |
 | Numbers as text | `$85.50`, `1,234.50`, `1.234,50` (European), `85,50` |
 | File format | comma / semicolon / tab / pipe delimited, `.xlsx`, UTF-8, UTF-8-BOM, Latin-1 |
-| Extra columns | `customerID`, `Churn`, anything else — ignored, not an error |
+| Extra columns | `customerID`, `Churn`, anything else - ignored, not an error |
 | Missing optional columns | Filled with a stated default, reported in the UI |
 | Blank `TotalCharges` | Estimated from `tenure × MonthlyCharges` (the classic new-customer rows) |
 
-Only `tenure`, `MonthlyCharges` and `TotalCharges` are strictly required —
-the model's output would be meaningless if those were guessed. Everything else
+Only `tenure`, `MonthlyCharges` and `TotalCharges` are strictly required,
+since the model's output would be meaningless if those were guessed. Everything else
 falls back to a default that's shown to you.
 
 Whatever the auto-detector can't resolve appears in an **Adjust column
@@ -223,7 +223,7 @@ pytest -q
 ```
 
 `tests/conftest.py` bootstraps a tiny model from synthetic data if
-`models/best_model.pkl` doesn't exist yet, so the suite is self-contained —
+`models/best_model.pkl` doesn't exist yet, so the suite is self-contained,
 useful for CI, but **run `src/train.py` on the real data before trusting any
 numbers you put on your CV.**
 
@@ -236,7 +236,7 @@ numbers you put on your CV.**
    root configures everything (Docker build from `api/Dockerfile`, free plan,
    health check on `/health`).
 3. Render builds and gives you a URL like `https://churn-prediction-api.onrender.com`.
-   Note it — the Streamlit app needs it.
+   Note it - the Streamlit app needs it.
 
    Free-tier Render services spin down after 15 minutes idle and take ~30-60s
    to wake back up on the next request. Mention this if you demo it live.
@@ -249,7 +249,7 @@ numbers you put on your CV.**
    ```toml
    API_URL = "https://churn-prediction-api.onrender.com"
    ```
-   (use the real Render URL from the step above — see
+   (use the real Render URL from the step above - see
    `.streamlit/secrets.toml.example`).
 4. Deploy. Streamlit Cloud installs everything from the root `requirements.txt`.
 
@@ -271,15 +271,15 @@ docker run -p 8000:8000 churn-api
 - **Class imbalance** (~27% churn): handled via `class_weight="balanced"`
   (logistic regression, random forest) and `scale_pos_weight` (XGBoost)
   rather than resampling, so the training distribution still reflects
-  reality — model comparison uses ROC-AUC and F1, not accuracy, since
+  reality - model comparison uses ROC-AUC and F1, not accuracy, since
   accuracy is misleading on imbalanced data.
 - **No data leakage**: this dataset (unlike some of the newer IBM-enriched
   versions floating around) has no pre-computed churn-score or CLTV columns
-  to accidentally leak the target — every feature is something you'd know
+  to accidentally leak the target - every feature is something you'd know
   about a customer *before* they churn.
 - **Preprocessing is a fitted, persisted object** (`ColumnTransformer`
   saved via `joblib`), not ad-hoc code duplicated between training and
-  serving — the API and Streamlit app both call the exact same
+  serving - the API and Streamlit app both call the exact same
   `src/predict.py::predict_churn`, so there's no train/serve skew.
 - **Local + global explainability**: `src/explain.py` gives the "what
   matters overall" story for a model card; `src/predict.py`'s per-request
