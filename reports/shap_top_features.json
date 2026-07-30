@@ -1,0 +1,82 @@
+[
+  {
+    "feature": "Contract_Month-to-month",
+    "mean_abs_shap": 0.6810525485446517
+  },
+  {
+    "feature": "tenure",
+    "mean_abs_shap": 0.35988648195512846
+  },
+  {
+    "feature": "OnlineSecurity_No",
+    "mean_abs_shap": 0.24396098553191728
+  },
+  {
+    "feature": "TechSupport_No",
+    "mean_abs_shap": 0.21276142189910455
+  },
+  {
+    "feature": "InternetService_Fiber optic",
+    "mean_abs_shap": 0.1777651906311041
+  },
+  {
+    "feature": "Contract_Two year",
+    "mean_abs_shap": 0.1577740442534212
+  },
+  {
+    "feature": "TotalCharges",
+    "mean_abs_shap": 0.15024302175372944
+  },
+  {
+    "feature": "PaymentMethod_Electronic check",
+    "mean_abs_shap": 0.14108003088596385
+  },
+  {
+    "feature": "avg_monthly_spend",
+    "mean_abs_shap": 0.13928566439664078
+  },
+  {
+    "feature": "MonthlyCharges",
+    "mean_abs_shap": 0.13305368596675937
+  },
+  {
+    "feature": "MultipleLines_No",
+    "mean_abs_shap": 0.11569506707681103
+  },
+  {
+    "feature": "OnlineBackup_No",
+    "mean_abs_shap": 0.09458104088556908
+  },
+  {
+    "feature": "PaperlessBilling_No",
+    "mean_abs_shap": 0.05746045539834762
+  },
+  {
+    "feature": "StreamingMovies_Yes",
+    "mean_abs_shap": 0.04447398267536719
+  },
+  {
+    "feature": "Contract_One year",
+    "mean_abs_shap": 0.03980998025790999
+  },
+  {
+    "feature": "StreamingTV_Yes",
+    "mean_abs_shap": 0.03967987327020958
+  },
+  {
+    "feature": "SeniorCitizen_No",
+    "mean_abs_shap": 0.030883943271003092
+  },
+  {
+    "feature": "PaperlessBilling_Yes",
+    "mean_abs_shap": 0.028732132923724167
+  },
+  {
+    "feature": "Dependents_Yes",
+    "mean_abs_shap": 0.024897738655433228
+  },
+  {
+    "feature": "Dependents_No",
+    "mean_abs_shap": 0.0223237716246906
+  }
+]
