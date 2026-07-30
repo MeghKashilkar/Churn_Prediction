@@ -33,9 +33,8 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 st.set_page_config(page_title="Customer Churn Predictor", page_icon="📉", layout="wide")
-
-# API_URL = st.secrets.get("API_URL", os.environ.get("API_URL", "http://localhost:8000"))
-API_URL="http://localhost:8000"
+API_URL = st.secrets.get("API_URL", os.environ.get("API_URL", "http://localhost:8000"))
+# API_URL="http://localhost:8000"
 FIELD_OPTIONS = {
     "gender": ["Female", "Male"],
     "Partner": ["Yes", "No"],
