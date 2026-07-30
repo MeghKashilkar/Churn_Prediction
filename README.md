@@ -24,6 +24,41 @@ The app calls a FastAPI backend on Render; if that backend is asleep (free
 tier spins down after 15 min idle) the first request may take 30-60s to wake
 it, or the app falls back to scoring locally.
 
+## Results
+
+Trained on the full 7,032-customer Telco dataset (20% held out for testing,
+5-fold stratified cross-validation for model selection). Four classifiers
+were compared; **gradient boosting** won on ROC-AUC and was saved as the
+production model:
+
+| Model | ROC-AUC | Accuracy | Precision | Recall | F1 |
+|---|---|---|---|---|---|
+| **Gradient Boosting (selected)** | **0.839** | **79.3%** | 0.635 | 0.521 | 0.573 |
+| Random Forest | 0.834 | 74.8% | 0.517 | 0.781 | 0.622 |
+| Logistic Regression | 0.835 | 72.6% | 0.490 | 0.797 | 0.607 |
+| XGBoost | 0.829 | 74.0% | 0.507 | 0.757 | 0.607 |
+
+Full numbers in [`reports/model_comparison.csv`](reports/model_comparison.csv).
+Gradient boosting was picked for ROC-AUC (the metric that matters most under
+~27% class imbalance), not accuracy, which is why a model with lower raw
+accuracy than random forest still won.
+
+<img src="reports/figures/roc_curves.png" width="420"> <img src="reports/figures/confusion_matrix.png" width="420">
+
+**What drives churn, per SHAP:**
+
+| Rank | Feature | What it means |
+|---|---|---|
+| 1 | Month-to-month contract | Biggest single driver, no lock-in = easiest to leave |
+| 2 | Low tenure | New customers churn far more than long-tenured ones |
+| 3 | No online security add-on | Correlates with lower overall engagement |
+| 4 | No tech support add-on | Same pattern, less "stickiness" |
+| 5 | Fiber optic internet | Higher price point, more churn-prone segment |
+
+Full ranking in [`reports/shap_top_features.json`](reports/shap_top_features.json).
+
+<img src="reports/figures/shap_summary_bar.png" width="420"> <img src="reports/figures/shap_summary_beeswarm.png" width="420">
+
 ## Why this project
 
 Telecom churn is a classic but well-scoped business problem: predict which
@@ -111,12 +146,6 @@ source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-> **Note on how this repo was built:** the code in this project was written
-> and reviewed but not executed in the environment it was generated in
-> (no outbound package installs were possible there). Run the smoke test
-> below first - if anything errors, paste the traceback back and it'll get
-> fixed fast.
-
 ### Smoke test
 
 ```bash
@@ -138,12 +167,10 @@ held-out 20% test set (accuracy, precision, recall, F1, ROC-AUC), and saves:
 - `reports/model_comparison.csv` - every model's metrics side by side
 - `reports/figures/roc_curves.png`, `reports/figures/confusion_matrix.png`
 
-**Fill in your real numbers here after running it** (this is exactly the kind
-of quantified bullet your CV needs):
-
-| Model | ROC-AUC | F1 | Precision | Recall |
-|---|---|---|---|---|
-| _run `python -m src.train` and paste `reports/model_comparison.csv` here_ | | | | |
+Actual results from this run are in [Results](#results) above. Re-running
+against the same CSV should reproduce them closely (seeded splits); numbers
+will differ if you train on a different sample size or a re-downloaded copy
+of the dataset.
 
 ## Explain
 
@@ -153,9 +180,8 @@ python -m src.explain --data data/raw/Telco-Customer-Churn.csv
 
 Produces `reports/figures/shap_summary_bar.png` and `shap_summary_beeswarm.png`,
 global feature importance for the winning model, plus
-`reports/shap_top_features.json`. Contract type, tenure, and internet service
-are the usual top drivers on this dataset; your actual ranking will be in the
-JSON.
+`reports/shap_top_features.json`. The actual top drivers from this run are
+in [Results](#results) above, contract type and tenure lead by a wide margin.
 
 ## Run the API
 
