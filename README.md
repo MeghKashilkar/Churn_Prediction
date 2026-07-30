@@ -117,7 +117,7 @@ churn-prediction/
 └── Procfile                     # alternative start command (Render/Heroku-style)
 ```
 
-## Get the data
+## Data used
 
 This repo ships with `data/raw/Telco-Customer-Churn.csv` - **7,043-row**
  from the classic IBM/Kaggle "Telco Customer Churn" dataset, included
